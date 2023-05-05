@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Language Model and Analytics Project (LMAP)",
+    "section": "",
+    "text": "Mission:\n\nTo serve as a hub for researchers from different disciplines to collaborate on data science projects, including large language and computational models.\nTo facilitate the development and application of state-of-the-art techniques in novel language models involving social and text data.\nTo encourage interdisciplinary research that synergizes social science, computer science, biomedical, and neuroscience studies.\nTo create a platform for sharing knowledge, ideas, and resources among members.\n\n\n\n\n\n\n\n\n\n\n\nLMAP: Introduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMay 5, 2023\n\n\nLMAP admin.\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "LMAP: Introduction",
+    "section": "",
+    "text": "LMAP meets every Friday for project presentations and planning.\nTime: 11:00 am -12:30 pm\nLocation: Permian Basin Conference Room, Green Hall"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Introduction\n\nThe “Language Model and Analytics Project” is an interdisciplinary research initiative that aims to explore, develop, and apply advanced language models and data analytics techniques to a wide range of problems across various domains. By bringing together researchers from diverse disciplines, this project seeks to foster collaboration and innovation in the study and application of large language models and data-driven methods.\n\nScope:\n\nThe scope of the project encompasses the following areas:\nLarge Language Models: Investigating state-of-the-art language models, such as GPT-like architectures, BERT, and transformers, as well as exploring novel techniques for developing and improving language models.\nData Analytics: Applying advanced data science methods, including machine learning, deep learning, and natural language processing, to analyze and make sense of large-scale, unstructured text data.\nInterdisciplinary Research: Bridging the gap between disciplines, such as social sciences, computer science, biology, and neuroscience, to address complex problems that require a diverse set of expertise and approaches.\nPractical Applications: Developing and implementing real-world solutions using language models and analytics techniques across various domains, such as healthcare, finance, marketing, policy-making, and more.\n\nResearch Direction:\n\nThe research direction for the Language Model and Analytics Project can be divided into three main pillars:\n\nFundamental Research: Investigate the underlying principles, algorithms, and techniques that drive large language models and data analytics. This includes exploring new methods for training, fine-tuning, and evaluating language models, as well as understanding their strengths and limitations.\nApplied Research: Apply language models and analytics techniques to solve specific problems in various domains. This may involve designing novel applications, refining existing methods, or analyzing the impact of these techniques on society, economy, and policy.\nCross-disciplinary Collaboration: Encourage collaboration and knowledge exchange among researchers from different disciplines to inspire new perspectives and ideas. This can lead to the development of innovative solutions that integrate the expertise of multiple fields."
+  }
+]
