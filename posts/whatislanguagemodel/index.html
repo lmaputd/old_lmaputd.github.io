@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Karl Ho.">
+<meta name="dcterms.date" content="2023-05-06">
+
+<title>Language Model and Analytics Project (LMAP) - LMAP: What is Language Model?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Language Model and Analytics Project (LMAP)</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/lmaputd"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/lmap.utd"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">LMAP: What is Language Model?</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">language model</div>
+                <div class="quarto-category">methods</div>
+                <div class="quarto-category">data science</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Karl Ho. </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 6, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>What is language model?</p>
+<ol type="1">
+<li>Understanding the Basics</li>
+</ol>
+<p>A language model is a type of artificial intelligence (AI) algorithm that can learn the patterns and structure of language, allowing it to generate new text that is similar to human writing. In other words, language models are machines that can understand and create language.</p>
+<p>Language models have been around for decades, but recent advances in AI and machine learning have led to significant improvements in their accuracy and sophistication. Today, some of the most powerful language models are based on deep learning techniques such as neural networks, which allow them to process vast amounts of data and learn complex patterns in language.</p>
+<p>So what can language models be used for? In political and social studies, language models have a wide range of applications. For example:</p>
+<p>- Sentiment analysis: Language models can be used to analyze large volumes of text data from social media, news articles, and other sources to determine the overall sentiment or emotional tone of the text. This can be useful for understanding public opinion on political issues or tracking changes in sentiment over time.</p>
+<p>- Political document analysis: Language models can be used to analyze political documents such as speeches, policy statements, and party platforms to identify key themes and topics, track changes in political discourse over time, and detect biases or inconsistencies in the text.</p>
+<p>- Election forecasting and modeling: Language models can be used to predict the outcomes of elections based on factors such as candidate speeches, polling data, and social media activity. This can help political campaigns and analysts to make more informed decisions about strategy and messaging (<a href="https://arxiv.org/pdf/1204.6441">Gayo-Avello</a> 2012, <a href="https://ojs.aaai.org/index.php/ICWSM/article/download/14009/13858">Tumasjan</a> 2010).</p>
+<p>- Social network analysis of political actors: Language models can be used to analyze social network data to identify key political actors and their connections, track the flow of information through the network, and detect patterns of influence and power.</p>
+<p>- Automated content analysis of political speeches and debates: Language models can be used to automatically classify political speeches and debates based on their content, identifying key themes, topics, and arguments. This can be useful for tracking changes in political discourse over time, comparing the positions of different candidates, and identifying areas of consensus or disagreement (e.g.&nbsp;polarization in <a href="https://dl.acm.org/doi/pdf/10.1145/1134271.1134277?casa_token=5-poKhdEpXwAAAAA:6rCpxUgRoqVW_Q9tUy2gP3dEESCFmlL3MrF9cakNy7nmEsmV3tSpDJ_TIak4NWwGLu3rbMdndhM">Adamic and Glance. 2005.</a>)</p>
+<p>- Detection of fake news and disinformation: Language models can be used to identify and flag misleading or false information in news articles, social media posts, and other sources. This can help to combat the spread of misinformation and promote more accurate reporting.</p>
+<p>These are just a few examples of the ways in which language models can be used in political and social studies. As the technology continues to evolve, we can expect to see even more innovative applications in the future.</p>
+<p>One notable example of a language model that has had a significant impact on political and social studies is the GPT-3 (Generative Pre-trained Transformer 3) language model. GPT-3 is a highly advanced deep learning model developed by OpenAI, trained on a massive corpus of text data to generate highly coherent and contextually relevant text. Its capabilities include natural language processing (NLP), question-answering, language translation, and even creative writing.</p>
+<p>In addition to GPT-3, there are many other language models and techniques that are being used in political and social studies, including BERT (Bidirectional Encoder Representations from Transformers), ELMo (Embeddings from Language Models), and ULMFiT (Universal Language Model Fine-tuning), among others. Each of these models has its own strengths and weaknesses, and can be applied in a variety of contexts to help researchers gain new insights into language and social behavior.</p>
+<p>Another example is the use of topic modeling techniques to identify key issues and themes in political discourse. Topic modeling is a type of unsupervised machine learning that can automatically identify and extract topics from large text datasets. Researchers can use these topics to identify patterns and trends in political discussions and debates, and to track changes in public opinion over time.</p>
+<p>In addition to these examples, there are many other ways that natural language processing and machine learning techniques can be applied in political and social studies. By analyzing large text datasets and identifying patterns and trends in language use and social behavior, researchers can gain new insights into the complex social and political issues facing our world today.</p>
+<p>Probability in a language model:</p>
+<p><span id="eq-langmodel"><span class="math display">\[
+P(w_1^n) = \prod_{i=1}^n P(w_i|w_1^{i-1})
+\tag{1}\]</span></span></p>
+<p>This formula states that the probability of a sequence of words \(w_1^n\) is equal to the product of the conditional probabilities of each word given its preceding words in the sequence.</p>
+<p>The top five most influential works/papers are as follows:</p>
+<p>1. “Efficient Estimation of Word Representations in Vector Space” <span class="citation" data-cites="mikolov2013">(<a href="#ref-mikolov2013" role="doc-biblioref">Mikolov et al. 2013</a>)</span> by Tomas Mikolov et al.&nbsp;This paper introduced the word2vec algorithm, which revolutionized the way that word embeddings are trained and used.</p>
+<p>2. “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding” by Jacob Devlin et al.&nbsp;This paper introduced the BERT model, which achieved state-of-the-art results on a wide range of natural language processing tasks.</p>
+<p>3. “Language Models are Few-Shot Learners” by Tom Brown et al.&nbsp;This paper demonstrated the impressive few-shot learning capabilities of the GPT-3 language model, which can generate coherent and grammatical text with minimal task-specific training.</p>
+<p>4. “Attention Is All You Need” by Ashish Vaswani et al.&nbsp;This paper introduced the Transformer architecture, which is now the dominant approach for sequence modeling tasks in natural language processing.</p>
+<p>5. “Deep contextualized word representations” by Matthew Peters et al.&nbsp;This paper introduced the ELMo model, which was the first to demonstrate the power of deep contextualized embeddings for natural language understanding tasks.</p>
+<p>The impacts of these papers have been significant in shaping the direction of research in language modeling. They have led to the development of new models that achieve state-of-the-art results on a wide range of natural language processing tasks, including machine translation, language modeling, and sentiment analysis. They have also sparked interest in transfer learning and few-shot learning, and have led to the development of large-scale pre-training datasets and models that have greatly accelerated progress in the field.</p>
+<p>In conclusion, language models are a powerful tool for political and social scientists, providing new ways to analyze and understand language, culture, and social behavior. As these models continue to evolve and improve, they hold tremendous promise for advancing our understanding of the complex social and political issues facing our world today.</p>
+<p>---</p>
+<p>References:</p>
+<p><a href="https://dl.acm.org/doi/pdf/10.1145/1134271.1134277?casa_token=5-poKhdEpXwAAAAA:6rCpxUgRoqVW_Q9tUy2gP3dEESCFmlL3MrF9cakNy7nmEsmV3tSpDJ_TIak4NWwGLu3rbMdndhM">Adamic, Lada A., and Natalie Glance. 2005. “The political blogosphere and the 2004 US election: divided they blog.” In <em>Proceedings of the 3rd international workshop on Link discovery</em>, pp.&nbsp;36-43.</a></p>
+<p><a href="https://arxiv.org/pdf/1204.6441">Gayo-Avello, Daniel. 2012. “I Wanted to Predict Elections with Twitter and all I got was this Lousy Paper”--A Balanced Survey on Election Prediction using Twitter Data.” <em>arXiv preprint arXiv:1204.6441</em> .</a></p>
+<p><a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F7AAC8B2909441603FEB25C156448F20/S1047198700013401a.pdf/text_as_data_the_promise_and_pitfalls_of_automatic_content_analysis_methods_for_political_texts.pdf?casa_token=jtF1Hbm3UMQAAAAA:C0JmQroUsVdUwrJwxRVR58w5Lgz7JWpPAVhw1SIaV0cIA2ZCXEJYIE24Vk0znmaWa1HaJ7c">Grimmer, Justin, and Brandon M. Stewart. 2013. “Text as data: The promise and pitfalls of automatic content analysis methods for political texts.” <em>Political analysis</em> 21, no. 3: 267-297.</a></p>
+<p><a href="https://arxiv.org/pdf/1301.3781.pdf%C3%AC%E2%80%94%20%C3%AC%E2%80%9E%C5%93">Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. “Efficient estimation of word representations in vector space.” <em>arXiv preprint arXiv:1301.3781</em> .</a></p>
+<p><a href="https://ojs.aaai.org/index.php/ICWSM/article/download/14009/13858">Tumasjan, Andranik, Timm Sprenger, Philipp Sandner, and Isabell Welpe. 2010. “Predicting elections with twitter: What 140 characters reveal about political sentiment.” In Proceedings of the international AAAI conference on web and social media, vol.&nbsp;4, no. 1, pp.&nbsp;178-185.</a></p>
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-mikolov2013" class="csl-entry" role="doc-biblioentry">
+Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space,”</span> September. <a href="https://doi.org/10.48550/arXiv.1301.3781">https://doi.org/10.48550/arXiv.1301.3781</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
