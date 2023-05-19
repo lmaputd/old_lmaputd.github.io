@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/word2vec/index.html",
       "/posts/whatislanguagemodel/index.html",
       "/posts/welcome/index.html"
     ]
