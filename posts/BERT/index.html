@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Karl Ho.">
+<meta name="dcterms.date" content="2023-05-26">
+
+<title>Language Model and Analytics Project (LMAP) - LMAP: BERT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Language Model and Analytics Project (LMAP)</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../team.html">
+ <span class="menu-text">Team</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/lmaputd"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/lmap_utd"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">LMAP: BERT</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">language model</div>
+                <div class="quarto-category">NLP</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Karl Ho. </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 26, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction-to-bert" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-bert">Introduction to BERT</h2>
+<p>BERT, short for <em>Bidirectional Encoder Representations from Transformers,</em> is a machine learning model for natural language processing[<span class="citation" data-cites="ettinger2020">Ettinger (<a href="#ref-ettinger2020" role="doc-biblioref">2020a</a>)</span>]<span class="citation" data-cites="wang2022">(<a href="#ref-wang2022" role="doc-biblioref">Wang 2022</a>)</span>. It was developed in 2018 by researchers at Google AI Language and provide a suite of tools for the most common language tasks, such as sentiment analysis, question answering, and text summarization[<span class="citation" data-cites="ettinger2020a">Ettinger (<a href="#ref-ettinger2020a" role="doc-biblioref">2020b</a>)</span>]<span class="citation" data-cites="fournier2023">(<a href="#ref-fournier2023" role="doc-biblioref">Fournier, Caron, and Aloise 2023a</a>)</span>. BERT is a stack of many encoder blocks, and the input text is separated into tokens as in the transformer model<span class="citation" data-cites="kanade2023">(<a href="#ref-kanade2023" role="doc-biblioref">Kanade et al. 2023a</a>)</span>. BERT makes use of Transformer, an attention mechanism that learns contextual relations between words (or sub-words) in a text<span class="citation" data-cites="fournier2023a">(<a href="#ref-fournier2023a" role="doc-biblioref">Fournier, Caron, and Aloise 2023b</a>)</span>.</p>
+<p>There are pre-trained BERT models that you can use readily<span class="citation" data-cites="kanade2023">(<a href="#ref-kanade2023" role="doc-biblioref">Kanade et al. 2023a</a>)</span>. Using BERT, the idea is to extract a few sentences from the original text that represent the entire text, which is similar to next sentence prediction<span class="citation" data-cites="kanade2023">(<a href="#ref-kanade2023" role="doc-biblioref">Kanade et al. 2023a</a>)</span>. Another example of using BERT is to match questions to answers<span class="citation" data-cites="kanade2023a">(<a href="#ref-kanade2023a" role="doc-biblioref">Kanade et al. 2023b</a>)</span>. BERT is a highly complex and advanced language model that helps people automate language understandin<span class="citation" data-cites="wang2022">(<a href="#ref-wang2022" role="doc-biblioref">Wang 2022</a>)</span>. Its ability to accomplish state-of-the-art performance is supported by training on massive amounts of data and leveraging compute considerations<span class="citation" data-cites="wang2022">(<a href="#ref-wang2022" role="doc-biblioref">Wang 2022</a>)</span>.</p>
+<p>The formula for the BERT model is not explicitly provided in the search results. However, the model is based on the Transformer architecture, which uses self-attention to compute a weighted sum of the input embeddings. The self-attention mechanism can be represented mathematically as follows:</p>
+<p><span class="math inline">\(\text{Attention}(Q,K,V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V\)</span></p>
+<p>where \(Q\), \(K\), and \(V\) are the query, key, and value matrices, respectively, and \(d_k\) is the dimensionality of the key vectors. The output of the self-attention layer is then passed through a feedforward neural network, and the process is repeated for multiple layers to obtain the final representation of the input sequence.</p>
+<section id="more-reading" class="level3">
+<h3 class="anchored" data-anchor-id="more-reading">More reading</h3>
+<p>Devlin, Jacob, et al.&nbsp;“BERT: Pre-training of deep bidirectional transformers for language understanding.” Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies. 2019.</p>
+<p>Horev, Rani. 2018. "BERT Explained: State of the Art Language Model for NLP." <em>Medium</em>. <a href="https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270" class="uri">https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270</a> (May 26, 2023).</p>
+<p>Liu, Xiaoyu, et al.&nbsp;“A proof-of-concept meaning discrimination experiment to evaluate the effectiveness of BERT.” Acta Linguistica Academica 69.4 (2022): 521-534.</p>
+<p>Muller, B. 2022. “BERT 101 state of the art NLP model explained.” <em>URL https://huggingface. co/blog/bert-101</em>.</p>
+<p>Tam, Adrian. 2022. "A Brief Introduction to BERT." <em>MachineLearningMastery.com</em>. <a href="https://machinelearningmastery.com/a-brief-introduction-to-bert/" class="uri">https://machinelearningmastery.com/a-brief-introduction-to-bert/</a> (May 26, 2023).</p>
+<p>Wang, Alex, et al.&nbsp;“NLP Evaluation in the Time of Large Language Models.” arXiv preprint arXiv:2108.13656 (2021).</p>
+<p>Zhang, Yifan, et al.&nbsp;“Pre-trained Contextual Embedding of Source Code.” arXiv preprint arXiv:1911.09438 (2019).</p>
+<p>Zhang, Yuhao, et al.&nbsp;“A Practical Survey on Faster and Lighter Transformers.” arXiv preprint arXiv:2103.14636 (2021).</p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-ettinger2020" class="csl-entry" role="doc-biblioentry">
+Ettinger, Allyson. 2020a. <span>“What BERT Is Not: Lessons from a New Suite of Psycholinguistic Diagnostics for Language Models.”</span> <em>Transactions of the Association for Computational Linguistics</em> 8: 34–48. <a href="https://doi.org/10.1162/tacl_a_00298">https://doi.org/10.1162/tacl_a_00298</a>.
+</div>
+<div id="ref-ettinger2020a" class="csl-entry" role="doc-biblioentry">
+———. 2020b. <span>“What BERT Is Not: Lessons from a New Suite of Psycholinguistic Diagnostics for Language Models.”</span> <em>Transactions of the Association for Computational Linguistics</em> 8: 34–48. <a href="https://doi.org/10.1162/tacl_a_00298">https://doi.org/10.1162/tacl_a_00298</a>.
+</div>
+<div id="ref-fournier2023" class="csl-entry" role="doc-biblioentry">
+Fournier, Quentin, Gaétan Marceau Caron, and Daniel Aloise. 2023a. <span>“A Practical Survey on Faster and Lighter Transformers.”</span> <em>ACM Computing Surveys</em>, March, 3586074. <a href="https://doi.org/10.1145/3586074">https://doi.org/10.1145/3586074</a>.
+</div>
+<div id="ref-fournier2023a" class="csl-entry" role="doc-biblioentry">
+———. 2023b. <span>“A Practical Survey on Faster and Lighter Transformers.”</span> <em>ACM Computing Surveys</em>, March, 3586074. <a href="https://doi.org/10.1145/3586074">https://doi.org/10.1145/3586074</a>.
+</div>
+<div id="ref-kanade2023" class="csl-entry" role="doc-biblioentry">
+Kanade, Aditya, Petros Maniatis, Gogul Balakrishnan, and Kensen Shi. 2023a. <span>“Pre-Trained Contextual Embedding of Source Code,”</span> May. <a href="https://openreview.net/forum?id=rygoURNYvS">https://openreview.net/forum?id=rygoURNYvS</a>.
+</div>
+<div id="ref-kanade2023a" class="csl-entry" role="doc-biblioentry">
+———. 2023b. <span>“Pre-Trained Contextual Embedding of Source Code,”</span> May. <a href="https://openreview.net/forum?id=rygoURNYvS">https://openreview.net/forum?id=rygoURNYvS</a>.
+</div>
+<div id="ref-wang2022" class="csl-entry" role="doc-biblioentry">
+Wang, Alex. 2022. <span>“NLP Evaluation in the Time of Large Language Models.”</span> PhD thesis, United States – New York. <a href="https://www.proquest.com/docview/2738401552/abstract/277A159A57464901PQ/1">https://www.proquest.com/docview/2738401552/abstract/277A159A57464901PQ/1</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
